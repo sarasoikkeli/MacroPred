@@ -15,14 +15,6 @@ Install all the packages of the `requirements.txt` into your environment by runn
 pip install -r requirements.txt
 ```
 
-- rdkit
-- mordred
-- pandas
-- sklearn
-- boruta
-- joblib
-- numpy (v.<1.24.0 - newer versions have compatibility issues with mordred calculator due to the deprecation and removal of numpy.float & numpy.int attributes)
-
 Ensure that Python 3 is installed on your system and that all required dependencies are satisfied before running the script.
 
 ## User guide
@@ -43,8 +35,12 @@ python3 main.py 'smiles.smi'
 (Replace 'smiles.smi' with the name of your SMILES file.)
 
 ### 4. Interpreting Results
-- Upon completion, the script will generate a file named `predicted_labels.csv`.
+- Upon completion, the script will generate two files:
+1) `descriptors.csv` contains molecular descriptor values calculated by Mordred software and 
+2) `predicted_labels.csv` contains the results of premeability predictions.
+
 - Each SMILES notation will be assigned a predicted permeability label.
     - Label 1 indicates permeable.
     - Label 0 indicates impermeable.
+
 - The output file will be located in the same directory where the script is executed.

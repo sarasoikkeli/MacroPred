@@ -8,6 +8,7 @@ from rdkit import Chem
 from mordred import Calculator
 from sklearn.preprocessing import StandardScaler
 from joblib import load
+import numpy as np
 import xgboost
 
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
@@ -23,7 +24,18 @@ def calculate_descriptors(smiles_list):
         sys.exit(1)
     
     logger.info("Calculating descriptors...")
-    return calc.pandas(mols)
+    try:
+        descs = calc.pandas(mols)
+        # Check for missing or non-numeric values
+        if descs.isnull().values.any() or not np.isfinite(descs.values).all():
+            raise ValueError("Descriptors calculation resulted in missing or non-numeric values.")
+
+        descs_file = Path.cwd() / 'descriptors.csv'
+        descs.to_csv(descs_file, index=False)
+        return descs
+    except Exception as e:
+        logger.error("Error in calculating descriptors: %s", str(e))
+        sys.exit(1)
     
 def predict_labels(descriptors):
     """Predict labels with the serialized model using descriptors as input."""
