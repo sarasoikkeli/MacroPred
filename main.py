@@ -30,8 +30,6 @@ def calculate_descriptors(smiles_list):
         if descs.isnull().values.any() or not np.isfinite(descs.values).all():
             raise ValueError("Descriptors calculation resulted in missing or non-numeric values.")
 
-        descs_file = Path.cwd() / 'descriptors.csv'
-        descs.to_csv(descs_file, index=False)
         return descs
     except Exception as e:
         logger.error("Error in calculating descriptors: %s", str(e))
@@ -66,6 +64,8 @@ def main(smiles_file):
         
         # Calculate descriptors
         descriptors = calculate_descriptors(smiles_list)
+        descs_file = Path.cwd() / f'descriptors_{smiles_file_path.stem}.csv'
+        descriptors.to_csv(descs_file, index=False)
 
         # Predict labels
         labels = predict_labels(descriptors)

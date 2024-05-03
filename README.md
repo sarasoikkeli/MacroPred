@@ -36,8 +36,9 @@ python3 main.py 'smiles.smi'
 
 ### 4. Interpreting Results
 - Upon completion, the script will generate two files:
-1) `descriptors.csv` contains molecular descriptor values calculated by Mordred software and 
-2) `predicted_labels_{smiles}.csv` contains the results of premeability predictions. {smiles} refers to the stem name of the input smiles file.
+1) `descriptors_{smiles}.csv`: This file includes the calculated molecular descriptor values computed by Mordred software, which serve as inputs for the permeability prediction model.
+2) `predicted_labels_{smiles}.csv`: Here, you'll find the outcomes of the permeability predictions made by the model.
+In these file names, {smiles} denotes the stem name of the input SMILES file, ensuring easy identification of the associated results.
 
 - Each SMILES notation will be assigned a predicted permeability label.
     - Label 1 indicates permeable.
