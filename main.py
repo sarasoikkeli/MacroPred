@@ -72,7 +72,7 @@ def main(smiles_file):
 
         # Create DataFrame with SMILES and predicted labels
         results_df = pd.DataFrame({'SMILES': smiles_list, 'Predicted_Label': labels})
-        results_file = Path.cwd() / 'predicted_labels.csv'
+        results_file = Path.cwd() / f'predicted_labels_{smiles_file_path.stem}.csv'
         results_df.to_csv(results_file, index=False)
         
         
