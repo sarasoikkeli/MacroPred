@@ -1,4 +1,4 @@
-# PermeaCyclix: Predicting Macrocycle Permeability
+# MacroPred: Predicting Macrocycle Permeability
 
 ## Description
 This model is designed for predicting the cellular permeability of macrocyclic molecules of interest. It leverages a machine learning approach trained on 2D molecular descriptors selected using the Boruta algorithm. The model assigns target labels based on apparent permeability measurements obtained from an in vitro PAMPA assay. By utilizing this model, users can gain insights into the potential permeability properties of various molecules, aiding in drug discovery and development processes of macrocycles.
