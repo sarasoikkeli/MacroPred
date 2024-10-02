@@ -16,23 +16,37 @@ logger = logging.getLogger(__name__)
 
 def calculate_descriptors(smiles_list):
     """Calculate molecular descriptors for a list of SMILES strings."""
-    mols = [Chem.MolFromSmiles(smi) for smi in smiles_list]
-    calc = Calculator(BORUTA_FEATURES, ignore_3D=True)
-    
-    if None in mols:
-        logger.error("Error in processing SMILES. Check the content of the file and re-run the program. Make sure to exclude column header.")
-        sys.exit(1)
-    
-    logger.info("Calculating descriptors...")
     try:
+        mols = [Chem.MolFromSmiles(smi) for smi in smiles_list]
+        calc = Calculator(BORUTA_FEATURES, ignore_3D=True)
+        
+        problematic_smiles_lines = [(i+1, smiles) for i, smiles in enumerate(smiles_list) if mols[i] is None]
+        if problematic_smiles_lines:
+            print()
+            logger.error("Error in processing SMILES. Check the content of the file and re-run the program. Make sure to exclude column header.\n")
+            logger.error("The following SMILES strings caused the problem:\n")
+            for line_num, smiles in problematic_smiles_lines:
+                logger.error("Line number: %d, SMILES: %s", line_num, smiles)
+            sys.exit(1)
+        
+        logger.info("Calculating descriptors...")
         descs = calc.pandas(mols)
         # Check for missing or non-numeric values
         if descs.isnull().values.any() or not np.isfinite(descs.values).all():
             raise ValueError("Descriptors calculation resulted in missing or non-numeric values.")
-
+        
         return descs
+
+    except FileNotFoundError as fnf_err:
+        logger.error("File not found: %s", str(fnf_err))
+        sys.exit(1)
+
+    except ValueError as val_err:
+        logger.error("Value error occurred: %s", str(val_err))
+        sys.exit(1)
+
     except Exception as e:
-        logger.error("Error in calculating descriptors: %s", str(e))
+        logger.error("An unexpected error occurred: %s", str(e))
         sys.exit(1)
     
 def predict_labels(descriptors):

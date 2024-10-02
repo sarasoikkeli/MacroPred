@@ -5,8 +5,7 @@ PROJECT_PATH = Path.cwd()
 
 #RANDOM_STATE = 42
 
-#MODEL = 'test_model_xgb.pkl'
-#MODEL = 'model.pkl'
+
 MODEL = 'XGBClassifier.pkl'
 
 BORUTA_FEATURES = [Autocorrelation.AATS(0, 'se'),
