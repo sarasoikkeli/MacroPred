@@ -6,7 +6,7 @@ This model is designed for predicting the cellular permeability of macrocyclic m
 ## Content
 - `main.py` The main script to execute the permeability predictions
 - `config.py` Centralized location for key configurations (paths, constants, feature definitions)
-- `xgb_model.pkl` Serialized XGB model object employed to make predictions
+- `XGBClassifier.pkl` Serialized XGB model object employed to make predictions
 - `requirements.txt` List of packages with their specified versions required for running the main script
 
 ## Requirements
